@@ -29,7 +29,7 @@ h1>small {
 }
 
 @media screen and (max-width: 768px) {
-    h1>small {
+    h1>small, h2 {
         display: none;
     }
 }
