@@ -45,6 +45,7 @@ h2 {
 	height: 100vh;
 	margin: 0;
 	padding: 0;
+	display: table;
 	vertical-align: middle;
 	text-align: center;
 	background-color: #009688;
@@ -67,6 +68,8 @@ p.text {
 .text-wrapper.fullscreen p.text {
 	margin: auto;
 	color: #fff;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .helper {
