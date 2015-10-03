@@ -1,0 +1,123 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Fullskr - put your text on fullscreen easily</title>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,200' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="css/site.css">
+
+		<!-- Start generated favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+		<!-- End generated favicon -->
+
+	</head>
+
+	<body>
+		<div class="container">
+			<header class="header">
+				<h1><img src="img/fullskr_logo.png"><small>  - type anything and display it on fullscreen</small>
+			</header>
+			<main>
+				<h2>Sometimes you will want to use your device screen or projector to display text on fullscreen. This website is for those times.</h2>
+				<div id="text-wrapper" class="text-wrapper">
+					<p class="text" contenteditable="true" id="text" spellcheck="false">Just type your text here...</p>
+					<p id="helper"></p>
+				</div>
+				<div class="and">and</div>
+				<button type="button" id="request" class="go-fs">Go Fullscreen</button>
+				<h3 class="tips-title">Tips:</h3>	
+				<ul class="tips">
+					<li>Press 'Ctrl' + 'Enter' to go fullscreen quickly</li>
+					<li>While in Fullscreen mode click anywhere to exit</li>
+					<li>Try shorter texts (just one line), it looks and works better</li>
+					<li>If still tempted with long sentences, separate lines with 'Enter' to center multiline text vertically</li>
+				</ul>
+			</main>
+			<footer>
+				<a href="https://github.com/mizurnix">Mizurnix</a> created this website and used <a href="https://github.com/sindresorhus/screenfull.js/">screenfull.js</a> and <a href="http://colorhunt.co/#15274436759161d2b49dfdc7">colorhunt</a> while doing so
+			</footer>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="js/screenfull.min.js"></script>
+		<script>
+			$(function () {
+
+				$('#text').focus();
+				
+				$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
+
+				if (!screenfull.enabled) {
+					return false;
+				}
+
+				$('#request').click(function () {
+					screenfull.request($('#text-wrapper')[0]);
+				});
+
+				$('#text').keydown(function (e) {
+
+				  if (e.ctrlKey && e.keyCode == 13) {
+				    $('#request').trigger('click');
+				  }
+				});
+
+				$('#text-wrapper').click(function () {
+					screenfull.exit();
+				});
+
+				if (screenfull.enabled) {
+			    document.addEventListener(screenfull.raw.fullscreenchange, function () {
+		        if (screenfull.isFullscreen) {
+		        	$('#text').removeAttr('contenteditable');
+		        	$('#text-wrapper').addClass('fullscreen');
+		        	$('#helper').addClass('helper');
+
+		        	var idleTime = 0;
+							
+							var idleInterval = setInterval(timerIncrement, 1000);
+
+					    //Zero the idle timer on mouse movement.
+					    $(this).mousemove(function (e) {
+					        idleTime = 0;
+					        $('#text-wrapper').removeClass('hide-cursor');
+					    });
+					    $(this).keypress(function (e) {
+					        idleTime = 0;
+	                $('#text-wrapper').removeClass('hide-cursor');
+					    });
+
+							function timerIncrement() {
+							    idleTime = idleTime + 1;
+							    if (idleTime > 1) {
+							         $('#text-wrapper').addClass('hide-cursor');
+							    }
+							}
+		        }
+		        else {
+		        	$('#text').attr('contenteditable', true);
+		        	$('#text-wrapper').removeClass('fullscreen');
+		        	$('#helper').removeClass('helper');
+			 				$('#text').focus();
+		        }
+			    });
+				}
+			});
+		</script> 
+	</body>
+</html>
