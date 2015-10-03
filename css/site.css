@@ -70,11 +70,24 @@ p.text::selection {
 	background-color: #61D2B4;
 }
 
+p.text::-moz-selection {
+	color: #fff;
+	background-color: #61D2B4;
+}
+
 .text-wrapper.fullscreen p.text {
 	margin: auto;
 	color: #fff;
 	display: table-cell;
 	vertical-align: middle;
+}
+
+.text-wrapper.fullscreen p.text::selection {
+	background-color: transparent;
+}
+
+.text-wrapper.fullscreen p.text::-moz-selection {
+	background-color: transparent;
 }
 
 div.and {
