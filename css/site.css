@@ -130,17 +130,17 @@ ul.tips li {
 	margin: 10px;
 }
 
-footer {
-	margin-top: 100px;
-	padding: 10px 0 20px 0;
-	font-weight: 400;
-}
-
-footer a {
+a {
 	color: #61D2B4;
 	text-decoration: none;
 }
 
-footer a:hover {
+a:hover {
 	text-decoration: underline;
+}
+
+footer {
+	margin-top: 100px;
+	padding: 10px 0 20px 0;
+	font-weight: 400;
 }
