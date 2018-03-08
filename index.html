@@ -1,15 +1,14 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Fullskr - display your text on fullscreen. Easy</title>
-		<meta name="description" content="Fullskr displays user-inputted text in fullscreen mode from any device and browser">
+		<title>Fullskrin - display your text on fullscreen. Easy</title>
+		<meta name="description" content="Fullskrin displays any text in fullscreen mode on any device and browser">
 
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,200' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/site.css">
 
 		<link rel="icon" href="favicon.ico">
 
-		<!-- Start generated favicon -->
 		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
@@ -21,110 +20,62 @@
 		<link rel="manifest" href="/manifest.json">
 		<meta name="msapplication-TileColor" content="#00aba9">
 		<meta name="theme-color" content="#ffffff">
-		<!-- End generated favicon -->
 
 	</head>
 
 	<body>
 		<div class="container">
 			<header class="header">
-				<h1><a href="/"><img src="img/fullskr_logo.png" alt="Fullskr"></a><small>  - type anything and display it on fullscreen</small>
+				<h1>
+					<a href="/"><img src="img/fullskrin_logo.png" alt="Fullskrin"></a>
+					<small> - type anything and display it on fullscreen</small>
 			</header>
 			<main>
 				<h2>Sometimes you will want to use your device screen or projector to display text on fullscreen. This website is for those times.</h2>
 				<div id="text-wrapper" class="text-wrapper">
-					<p class="text" contenteditable="true" id="text" spellcheck="false">Just type your text here...</p>
+					<textarea class="text" id="text" spellcheck="false" placeholder="Just type your text here&hellip;"></textarea>
+					<div id="text-follower" class="text-follower"></div>
 				</div>
 				<div class="and">and</div>
-				<button type="button" id="request" class="go-fs">Go Fullscreen</button>
-				<h3 class="tips-title">Tips:</h3>	
+				<button type="button" id="the-button" class="the-button">Go Fullscreen</button>
+				<h3 class="tips-title">Tips:</h3>
 				<ul class="tips">
-					<li>Press 'Ctrl' + 'Enter' to go fullscreen quickly</li>
-					<li>While in Fullscreen mode click anywhere to exit</li>
-					<li>If this does not work on your device/browser configuration, please <a href="mailto:mizurnix@gmail.com?Subject=Halfskr&Body=Hi%2C%20I%20am%20using%20_YOURBROWSER_%20on%20_YOURDEVICE_%20and%20Fullskr%20does%20not%20go%20fullscreen." target="_blank">tell</a> me</li>
+					<li>
+						Press 'Ctrl' + 'Enter' to go fullscreen quickly
+					</li>
+
+					<li>
+						While in fullscreen mode click anywhere to exit
+					</li>
+
+					<li>
+						If you can't get Fullskrin to work, please
+						<a href="mailto:mizurnix@gmail.com?Subject=Halfskrin%20&#58;&#40;&Body=Hi%2C%20I%20am%20using%20&#91;TYPE%20YOUR%20BROWSER%20NAME%20AND%20VERSION&#93;%20on%20&#91;TYPE%20YOUR%20OS%20NAME%20AND%20VERSION&#93;%20and%20Fullskrin%20does%20not%20go%20fullscreen." target="_blank">tell</a>
+						me
+					</li>
 				</ul>
 			</main>
 			<footer>
-				<a href="https://github.com/mizurnix" target="_blank">Mizurnix</a> created this website and used <a href="https://github.com/sindresorhus/screenfull.js/" target="_blank">screenfull.js</a>, <a href="http://colorhunt.co/#15274436759161d2b49dfdc7" target="_blank">colorhunt</a> and <a href="https://www.google.ge/maps/search/pub/" target="_blank">beer</a> while doing so
+				<a href="https://github.com/mizurnix" target="_blank">Mizurnix</a>
+				created this website and used
+				<a href="https://github.com/sindresorhus/screenfull.js/" target="_blank">screenfull.js</a>,
+				<a href="http://colorhunt.co/#15274436759161d2b49dfdc7"  target="_blank">colorhunt</a> and
+				<a href="https://www.google.ge/maps/search/pub/"         target="_blank">beer</a> while doing so
 			</footer>
 		</div>
 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/screenfull.min.js"></script>
-		<script>
-			$(function () {
+		<script src="js/fullskrin.js"></script>
 
-				$('#text').focus();
-				
-				$('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
-
-				if (!screenfull.enabled) {
-					return false;
-				}
-
-				$('#request').click(function () {
-					ga('send', 'event', 'button', 'click', 'Go Fullscreen');
-					screenfull.request($('#text-wrapper')[0]);
-				});
-
-				$('#text').keydown(function (e) {
-
-				  if (e.ctrlKey && e.keyCode == 13) {
-				    $('#request').trigger('click');
-				  }
-				});
-
-				$('#text-wrapper').click(function () {
-					screenfull.exit();
-				});
-
-				if (screenfull.enabled) {
-			    document.addEventListener(screenfull.raw.fullscreenchange, function () {
-		        if (screenfull.isFullscreen) {
-		        	$('#text').removeAttr('contenteditable');
-		        	$('#text-wrapper').addClass('fullscreen');
-		        	$('#helper').addClass('helper');
-
-		        	var idleTime = 0;
-							
-							var idleInterval = setInterval(timerIncrement, 1000);
-
-					    //Zero the idle timer on mouse movement.
-					    $(this).mousemove(function (e) {
-					        idleTime = 0;
-					        $('#text-wrapper').removeClass('hide-cursor');
-					    });
-					    $(this).keypress(function (e) {
-					        idleTime = 0;
-	                $('#text-wrapper').removeClass('hide-cursor');
-					    });
-
-							function timerIncrement() {
-							    idleTime = idleTime + 1;
-							    if (idleTime > 1) {
-							         $('#text-wrapper').addClass('hide-cursor');
-							    }
-							}
-		        }
-		        else {
-		        	$('#text').attr('contenteditable', true);
-		        	$('#text-wrapper').removeClass('fullscreen');
-		        	$('#helper').removeClass('helper');
-			 				$('#text').focus();
-		        }
-			    });
-				}
-			});
-		</script> 
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		
+
 		  ga('create', 'UA-73769223-1', 'auto');
 		  ga('send', 'pageview');
-		
 		</script>
 	</body>
 </html>
