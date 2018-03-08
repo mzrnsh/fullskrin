@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   // TODO there is only one element so each should not be used
   $('#text').each(function () {
-    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden; resize: none;');
+    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow:hidden;resize:none');
   }).on('input', function () {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
