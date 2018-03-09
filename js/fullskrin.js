@@ -21,6 +21,16 @@ $(document).ready(function() {
 
   $('#the-button').click(function () {
     ga('send', 'event', 'button', 'click', 'Go Fullscreen');
+
+    // Set #text-follower content to whatever was typed in the #text textarea
+    textToShow = $("#text").val()
+
+    if (textToShow.trim().length < 1) {
+      textToShow = 'Did you type anything?'
+    }
+
+    $("#text-follower").text(textToShow);
+
     screenfull.request($('#text-wrapper')[0]);
   });
 
@@ -31,18 +41,15 @@ $(document).ready(function() {
   });
 
   if (screenfull.enabled) {
-    document.addEventListener(screenfull.raw.fullscreenchange, function () {
+    document.addEventListener(screenfull.raw.fullscreenchange, function() {
       if (screenfull.isFullscreen) {
         $('#text-wrapper').addClass('fullscreen');
-        $('#helper').addClass('helper');
-
-        // Set #text-follower content to whatever was typed in the #text textarea
-        $("#text-follower").text($("#text").val());
 
         // Exit fullscreen on tap, click, or keyboard press
         $('#text-wrapper').click(function() { screenfull.exit(); });
         $(document).keypress(function()     { screenfull.exit(); });
 
+        // Hide mouse pointer
         var idleTime     = 0;
         var idleInterval = setInterval(timerIncrement, 1000);
 
@@ -62,9 +69,9 @@ $(document).ready(function() {
             $('#text-wrapper').addClass('hide-cursor');
           }
         }
-      } else {
+      }
+      else {
         $('#text-wrapper').removeClass('fullscreen');
-        $('#helper').removeClass('helper');
         $('#text').focus();
       }
     });
