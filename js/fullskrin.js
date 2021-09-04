@@ -15,13 +15,9 @@ $(document).ready(function() {
 
   $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
 
-  if (!screenfull.enabled) {
-    return false;
-  }
+  if (!screenfull.enabled) return false;
 
   $('#the-button').click(function () {
-    ga('send', 'event', 'button', 'click', 'Go Fullscreen');
-
     // Set #text-follower content to whatever was typed in the #text textarea
     textToShow = $("#text").val()
 
