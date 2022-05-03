@@ -28,6 +28,10 @@ $(document).ready(function() {
     $("#text-follower").text(textToShow);
 
     screenfull.request($('#text-wrapper')[0]);
+     
+    if (typeof(splitbee) !== 'undefined') {
+      splitbee.track("Went fullscreen")
+    }
   });
 
   $('#text').keydown(function (e) {
